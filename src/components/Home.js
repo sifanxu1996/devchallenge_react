@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import { NASA_API_KEY } from "../shared/api";
 
 function formatDate(date) {
-  var d = new Date(date),
-    month = "" + (d.getMonth() + 1),
-    day = "" + d.getDate(),
-    year = d.getFullYear();
+  let d = new Date(date);
+  let month = "" + (d.getMonth() + 1);
+  let day = "" + d.getDate();
+  let year = d.getFullYear();
 
   if (month.length < 2) month = "0" + month;
   if (day.length < 2) day = "0" + day;
@@ -32,8 +32,7 @@ export default function Home() {
     fetchData(
       "https://api.nasa.gov/planetary/apod?api_key=" +
         NASA_API_KEY +
-        "&date=" +
-        formatDate(date)
+        "&date=" + date.toString()
     ).then((data) => {
       setDateImage(data.url);
     });
@@ -41,9 +40,10 @@ export default function Home() {
 
   const incrementDate = (value) => {
     setDate((prevDate) => {
-      const currentDate = new Date(prevDate);
-      console.log(currentDate);
-      return currentDate.setDate(currentDate.getDate() + value);
+      let date = new Date(prevDate);
+      // some kind of bug occurs when converting date format; encountered this previously and has something to do with YYYY-MM-DD format
+      date = formatDate(new Date(date.setDate(date.getDate() + value + 1)));
+      return date;
     });
   };
 
