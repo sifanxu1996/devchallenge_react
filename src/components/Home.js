@@ -58,9 +58,7 @@ export default function Home() {
   return (
     <React.Fragment>
       <div className="home">
-        <Link className="home-link" to="/nasaphoto">
-          See into the stars!
-        </Link>
+        <a className="home-link" href={dateImage}>See into the stars!</a>
         <img alt="select a date" src={dateImage} />
         <form onSubmit={onSubmit}>
           <label>Date:</label>
